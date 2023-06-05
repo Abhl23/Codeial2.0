@@ -24,6 +24,24 @@
       <br />
       <strong><%= post.user.name %></strong>
     </p>
+
+    <div class="post-comments">
+      <% if(locals.user) { %>
+      <form action="/comments/create" method="post">
+        <input type="text" name="content" placeholder="Add a comment..." />
+        <input type="hidden" name="post" value="<%= post._id %>">
+        <button type="submit">Add Comment</button>
+      </form>
+      <% } %>
+
+      <ul class="comments-list-container">
+        <% for(let comment of post.comments) { %>
+        <li>
+          <%= comment %>
+        </li>
+        <% } %>
+      </ul>
+    </div>
   </li>
   <%} %>
 </ul>
