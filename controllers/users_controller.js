@@ -44,7 +44,7 @@ module.exports.create = async function (req, res) {
         return res.redirect('back');
         
   } catch (err) {
-    console.log(`Error: ${err}`);
+    console.log('Error in creating a user in the db');
     return;
   }
 };
