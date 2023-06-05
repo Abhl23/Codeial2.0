@@ -10,9 +10,19 @@ const passport = require("passport");
 const passportLocal = require("./config/passport-local-strategy");
 const MongoStore = require("connect-mongo");
 
+const sassMiddleware = require("node-sass-middleware");
+
 const port = 8000;
 
 const app = express();
+
+app.use(sassMiddleware({
+  src: './assets/scss',
+  dest: './assets/css',
+  outputStyle: 'extended',
+  debug: true,
+  prefix: '/css'
+}));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

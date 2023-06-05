@@ -1,0 +1,20 @@
+footer {
+  padding: 5px 10px;
+  height: 4rem;
+  background-color: darkgray;
+  display: flex;
+  align-items: center; }
+  footer p {
+    color: white;
+    font-size: 1.1rem; }
+  footer ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column; }
+    footer ul li {
+      margin-bottom: 5px; }
+      footer ul li a {
+        color: white;
+        font-size: 1rem;
+        font-family: sans-serif;
+        text-decoration: none; }
