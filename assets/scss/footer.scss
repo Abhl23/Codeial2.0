@@ -1,0 +1,29 @@
+footer {
+  padding: 5px 10px;
+  height: 4rem;
+  background-color: darkgray;
+  display: flex;
+  align-items: center;
+
+  p{
+    color: white;
+    font-size: 1.1rem;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+
+    li {
+      margin-bottom: 5px;
+
+      a {
+        color: white;
+        font-size: 1rem;
+        font-family: sans-serif;
+        text-decoration: none;
+      }
+    }
+  }
+}
