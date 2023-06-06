@@ -25,8 +25,7 @@
         <small>
           <a href="/posts/destroy/<%= post._id %>">X</a>
         </small>
-        <% } %>
-        <%= post.content %>
+        <% } %> <%= post.content %>
         <br />
         <strong><%= post.user.name %></strong>
       </p>
@@ -45,7 +44,12 @@
             <% for(let comment of post.comments) { %>
             <li>
               <p>
-                <%= comment.content %>
+                <% if((locals.user && comment.user.id == locals.user.id) ||
+                (locals.user && post.user.id == locals.user.id)) { %>
+                <small>
+                  <a href="/comments/destroy/<%= comment._id %>">X</a>
+                </small>
+                <% } %> <%= comment.content %>
                 <br />
                 <small><%= comment.user.name %></small>
               </p>
