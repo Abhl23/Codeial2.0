@@ -4,4 +4,7 @@ body {
   /* text-align: center; */ }
   body #layout-main {
     height: 100%;
-    padding: 0 10px; }
+    padding: 0 10px;
+    overflow: scroll; }
+    body #layout-main::-webkit-scrollbar {
+      display: none; }
