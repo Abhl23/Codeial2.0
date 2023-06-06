@@ -1,0 +1,14 @@
+#main-container {
+  height: 100%;
+  display: flex; }
+  #main-container section {
+    display: inline-block; }
+  #main-container #feed-posts {
+    width: 70%;
+    height: 100%; }
+  #main-container #user-friends {
+    width: 28%;
+    height: 100%;
+    padding: 10px;
+    vertical-align: top;
+    border-left: 1px solid grey; }
