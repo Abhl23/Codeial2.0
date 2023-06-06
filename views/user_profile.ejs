@@ -2,19 +2,33 @@
 
 <h1>Codeial / <%= title %></h1>
 
-<% if(profile_user.id == user.id) { %>
+<div id="profile-container">
+  <% if(profile_user.id == user.id) { %>
 
-<!-- if user matches then show the update profile form -->
-<form action="/users/update/<%= profile_user.id %>" method="post">
-  <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required />
-  <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required />
-  <button type="submit">Update</button>
-</form>
+  <!-- if user matches then show the update profile form -->
+  <form action="/users/update/<%= profile_user.id %>" method="post">
+    <input
+      type="text"
+      name="name"
+      placeholder="Your Name"
+      value="<%= profile_user.name %>"
+      required
+    />
+    <input
+      type="email"
+      name="email"
+      placeholder="Your Email"
+      value="<%= profile_user.email %>"
+      required
+    />
+    <button type="submit">Update</button>
+  </form>
 
-<% } else { %>
+  <% } else { %>
 
-<!-- else only show the profile info -->
-<p>Name: <%= profile_user.name %></p>
-<p>Email: <%= profile_user.email %></p>
+  <!-- else only show the profile info -->
+  <p>Name: <%= profile_user.name %></p>
+  <p>Email: <%= profile_user.email %></p>
 
-<% } %>
+  <% } %>
+</div>

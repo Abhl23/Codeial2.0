@@ -5,7 +5,6 @@ body {
   /* text-align: center; */ }
   body #layout-main {
     height: calc(100% - 7.5rem);
-    padding: 0 10px;
     overflow: scroll; }
     body #layout-main::-webkit-scrollbar {
       display: none; }

@@ -1,2 +1,4 @@
 body {
   background-color: lightblue; }
+  body #profile-container {
+    padding: 10px; }
