@@ -11,7 +11,7 @@ passport.use(
       usernameField: "email",
     },
     async function (email, password, done) {
-      // find a user and establish the identity
+      // find the user and establish the identity
       try {
         const user = await User.findOne({ email: email });
 
