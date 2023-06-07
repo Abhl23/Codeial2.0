@@ -8,10 +8,12 @@ module.exports.create = async function (req, res) {
       user: req.user._id,
     });
 
+    req.flash('success', "Post Published!");
     return res.redirect("back");
   } catch (err) {
-    console.log("Error in creating a post in the db");
-    return;
+    
+    req.flash('error', err);
+    return res.redirect('back');
   }
 };
 
@@ -25,13 +27,14 @@ module.exports.destroy = async function (req, res) {
 
       await Comment.deleteMany({ post: req.params.id });
 
+      req.flash('success', "Post and associated comments deleted!");
       return res.redirect("back");
     }
 
-    console.log("You do not have authorization to delete the post");
+    req.flash('error', "You are not authorized to delete this post");
     return res.redirect("back");
   } catch (err) {
-    console.log("Error in deleting a post in the db");
-    return;
+    req.flash('error', err);
+    return res.redirect("back");
   }
 };

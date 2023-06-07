@@ -15,7 +15,7 @@ header {
 
   ul {
     padding: 0;
-    width: 9rem;
+    // width: 9rem;
     display: flex;
     list-style: none;
     // border: 1px solid black;
@@ -27,6 +27,7 @@ header {
       font-size: 1.2rem;
       font-family: sans-serif;
       text-decoration: none;
+      margin-left: 15px;
     }
   }
 }

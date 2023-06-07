@@ -1,3 +1,4 @@
+const { Error } = require("mongoose");
 const Comment = require("../models/comment");
 const Post = require("../models/post");
 
@@ -19,14 +20,16 @@ module.exports.create = async function (req, res) {
       // post.comments.push(comment);
       // post.save();
 
+      req.flash('success', "Comment Created!");
       return res.redirect("/");
     }
 
-    console.log("Said post does not exist");
+    req.flash('error', "Said post does not exist!");
     return res.redirect("/");
   } catch (err) {
-    console.log("Error in creating a comment in the db");
-    return;
+
+    req.flash('error', err);
+    return res.redirect('back');
   }
 };
 
@@ -35,7 +38,7 @@ module.exports.destroy = async function (req, res) {
     const comment = await Comment.findById(req.params.id);
 
     if (!comment) {
-      console.log("Comment does not exist in the db");
+      req.flash('error', "Said comment does not exist!");
       return res.redirect("back");
     }
 
@@ -51,15 +54,16 @@ module.exports.destroy = async function (req, res) {
     if (comment.user == req.user.id || post.user.id == req.user.id) {
       await Comment.findByIdAndDelete(req.params.id);
 
+      req.flash('success', "Comment Deleted!");
       return res.redirect("back");
     }
     else {
-      console.log("You do not have authorization to delete the comment");
+      req.flash('error', "You are not authorized to delete this comment!");
       return res.redirect("back");
     }
 
   } catch (err) {
-    console.log(`Error in deleting a comment from the db, ${err}`);
-    return;
+    req.flash('error', Error);
+    return res.redirect("back");
   }
 };

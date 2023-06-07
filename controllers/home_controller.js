@@ -22,8 +22,8 @@ module.exports.home = async function (req, res) {
       all_users: users
     });
   } catch (err) {
-    console.log("Error in finding posts from the db");
-    return;
+    req.flash('error', err);
+    return res.redirect('back');
   }
 };
 
