@@ -35,11 +35,19 @@ module.exports.create = async function (req, res) {
       return res.redirect("/");
     }
 
-    req.flash("error", "Said post does not exist!");
-    return res.redirect("/");
+    return res.status(500).json({
+      message: "Said post does not exist!",
+    });
+
+    // req.flash("error", "Said post does not exist!");
+    // return res.redirect("/");
   } catch (err) {
-    req.flash("error", err);
-    return res.redirect("back");
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+
+    // req.flash("error", err);
+    // return res.redirect("back");
   }
 };
 
@@ -48,8 +56,12 @@ module.exports.destroy = async function (req, res) {
     const comment = await Comment.findById(req.params.id);
 
     if (!comment) {
-      req.flash("error", "Said comment does not exist!");
-      return res.redirect("back");
+      return res.status(500).json({
+        message: "Said comment does not exist!",
+      });
+
+      // req.flash("error", "Said comment does not exist!");
+      // return res.redirect("back");
     }
 
     const postId = comment.post;
@@ -66,23 +78,32 @@ module.exports.destroy = async function (req, res) {
         },
       }).populate("user");
 
-      if(req.xhr){
+      if (req.xhr) {
         return res.status(200).json({
           data: {
-            comment_id: req.params.id
+            comment_id: req.params.id,
           },
-          message: "Comment Deleted!"
+          message: "Comment Deleted!",
         });
       }
 
       req.flash("success", "Comment Deleted!");
       return res.redirect("back");
     } else {
-      req.flash("error", "You are not authorized to delete this comment!");
-      return res.redirect("back");
+      
+      return res.status(401).json({
+        message: "You are not authorized to delete this comment!",
+      });
+
+      // req.flash("error", "You are not authorized to delete this comment!");
+      // return res.redirect("back");
     }
   } catch (err) {
-    req.flash("error", Error);
-    return res.redirect("back");
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+
+    // req.flash("error", Error);
+    // return res.redirect("back");
   }
 };

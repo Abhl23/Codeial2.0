@@ -22,6 +22,7 @@ module.exports.create = async function (req, res) {
           post,
         },
         message: "Post Published!",
+        success: true
       });
     }
 
@@ -29,8 +30,13 @@ module.exports.create = async function (req, res) {
     return res.redirect("back");
     
   } catch (err) {
-    req.flash("error", err);
-    return res.redirect("back");
+
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+
+    // req.flash("error", err);
+    // return res.redirect("back");
   }
 };
 
@@ -50,6 +56,7 @@ module.exports.destroy = async function (req, res) {
             post_id: req.params.id,
           },
           message: "Post and associated comments deleted!",
+          success: true
         });
       }
 
@@ -57,11 +64,20 @@ module.exports.destroy = async function (req, res) {
       return res.redirect("back");
     }
 
-    req.flash("error", "You are not authorized to delete this post");
-    return res.redirect("back");
+    return res.status(401).json({
+      message: "You are not authorized to delete this post!",
+    });
+
+    // req.flash("error", "You are not authorized to delete this post");
+    // return res.redirect("back");
 
   } catch (err) {
-    req.flash("error", err);
-    return res.redirect("back");
+
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+
+    // req.flash("error", err);
+    // return res.redirect("back");
   }
 };

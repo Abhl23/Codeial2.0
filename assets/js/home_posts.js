@@ -1,24 +1,13 @@
 {
   // display notifications using Noty
-  let showNotifications = {
-    success: function (message) {
-      new Noty({
-        type: "success",
-        text: message,
-        theme: "relax",
-        layout: "topRight",
-        timeout: 1500,
-      }).show();
-    },
-    error: function (message) {
-      new Noty({
-        type: "error",
-        text: message,
-        theme: "relax",
-        layout: "topRight",
-        timeout: 1500,
-      }).show();
-    },
+  let showNotification = function (type, message) {
+    new Noty({
+      type: type,
+      text: message,
+      theme: "relax",
+      layout: "topRight",
+      timeout: 1500,
+    }).show();
   };
 
   // method to submit the form data for new post using AJAX
@@ -39,11 +28,12 @@
 
           deletePost($(" .delete-post-button", newPost));
 
-          showNotifications.success(data.message);
+          showNotification('success', data.message);
 
-          $('#new-post-form textarea').val('');
+          $("#new-post-form textarea").val("");
         },
         error: function (error) {
+          showNotification('error', error.responseJSON.message);
           console.log(error.responseText);
         },
       });
@@ -89,21 +79,21 @@
         success: function (data) {
           $(`#post-${data.data.post_id}`).remove();
 
-          showNotifications.success(data.message);
+          showNotification('success', data.message);
         },
         error: function (error) {
+          showNotification('error', error.responseJSON.message);
           console.log(error.responseText);
         },
       });
     });
   };
 
-
   // attaching click event on every delete post link
-  let deletePostButtons=$('.delete-post-button');
-  for(let i=0; i<deletePostButtons.length; i++){
-    deletePost(deletePostButtons.eq(i));          // eq() used because we want to pass a JQuery object
+  let deletePostButtons = $(".delete-post-button");
+  for (let i = 0; i < deletePostButtons.length; i++) {
+    deletePost(deletePostButtons.eq(i)); // eq() used because we want to pass a JQuery object
   }
-    
+
   createPost();
 }

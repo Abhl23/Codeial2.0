@@ -1,28 +1,18 @@
 {
   // display notifications using Noty
-  let showNotifications = {
-    success: function (message) {
-      new Noty({
-        type: "success",
-        text: message,
-        theme: "relax",
-        layout: "topRight",
-        timeout: 1500,
-      }).show();
-    },
-    error: function (message) {
-      new Noty({
-        type: "error",
-        text: message,
-        theme: "relax",
-        layout: "topRight",
-        timeout: 1500,
-      }).show();
-    },
+  let showNotification = function (type, message) {
+    new Noty({
+      type: type,
+      text: message,
+      theme: "relax",
+      layout: "topRight",
+      timeout: 1500,
+    }).show();
   };
 
   let createComment = function (commentForm) {
-    commentForm.submit(function (event) {               // commentForm is accessible in this handler function because of CLOSURES
+    commentForm.submit(function (event) {
+      // commentForm is accessible in this handler function because of CLOSURES
       event.preventDefault();
 
       $.ajax({
@@ -34,13 +24,14 @@
 
           $(`#post-comments-${data.data.comment.post}`).prepend(newComment);
 
-          deleteComment($(' .delete-comment-button', newComment));          // attaching click event to delete link of new comment
+          deleteComment($(" .delete-comment-button", newComment)); // attaching click event to delete link of new comment
 
-          showNotifications.success(data.message);
+          showNotification("success", data.message);
 
           $(' input[type="text"]', commentForm).val("");
         },
         error: function (error) {
+          showNotification('error', error.responseJSON.message);
           console.log(error.responseText);
         },
       });
@@ -61,28 +52,29 @@
                 </li>`);
   };
 
-  let deleteComment=function(deleteLink){
-    deleteLink.click(function(event){
-        event.preventDefault();
+  let deleteComment = function (deleteLink) {
+    deleteLink.click(function (event) {
+      event.preventDefault();
 
-        $.ajax({
-            method: 'get',
-            url: deleteLink.attr('href'),
-            success: function(data){
-                $(`#comment-${data.data.comment_id}`).remove();
+      $.ajax({
+        method: "get",
+        url: deleteLink.attr("href"),
+        success: function (data) {
+          $(`#comment-${data.data.comment_id}`).remove();
 
-                showNotifications.success(data.message);
-            },
-            error: function(error){
-                console.log(error.responseText);
-            }
-        });
+          showNotification("success", data.message);
+        },
+        error: function (error) {
+          showNotification('error', error.responseJSON.message);
+          console.log(error.responseText);
+        },
+      });
     });
   };
 
   // attaching click event to every delete comment link
-  let deleteCommentButtons=$('.delete-comment-button');
-  for(let i=0; i<deleteCommentButtons.length; i++){
+  let deleteCommentButtons = $(".delete-comment-button");
+  for (let i = 0; i < deleteCommentButtons.length; i++) {
     deleteComment(deleteCommentButtons.eq(i));
   }
 

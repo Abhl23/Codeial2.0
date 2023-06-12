@@ -12,9 +12,9 @@ module.exports.home = async function (req, res) {
         populate: {
           path: "user",
         },
-        options: {
-          sort: "-createdAt",
-        },
+        // options: {
+        //   sort: "-createdAt",
+        // },
       });
 
     const users = await User.find({});
