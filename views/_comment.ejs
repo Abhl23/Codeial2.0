@@ -1,11 +1,13 @@
-<li>
+<li id="comment-<%= comment._id %>">
   <p>
     <% if((locals.user && comment.user.id == locals.user.id) || (locals.user &&
-    post.user.id == locals.user.id)) { %>
+    post.user.id == locals.user.id)) { %>                         <!-- post can be used because it is in the context passed to _post.ejs i.e it is global to all the partials of _post.ejs -->
     <small>
-      <a href="/comments/destroy/<%= comment._id %>">X</a>
+      <a class="delete-comment-button" href="/comments/destroy/<%= comment._id %>">X</a>
     </small>
-    <% } %> <%= comment.content %>
+    <% } %>
+    
+    <%= comment.content %>
     <br />
     <small><%= comment.user.name %></small>
   </p>
