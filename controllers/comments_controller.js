@@ -54,15 +54,26 @@ module.exports.destroy = async function (req, res) {
 
     const postId = comment.post;
 
-    const post = await Post.findByIdAndUpdate(postId, {
-      $pull: {
-        comments: req.params.id,
-      },
-    }).populate("user");
+    const post = Post.findById(postId).populate("user");
     // authorization check for user of the comment OR user of the post
     // only either of these can delete the comment
     if (comment.user == req.user.id || post.user.id == req.user.id) {
       await Comment.findByIdAndDelete(req.params.id);
+
+      await Post.findByIdAndUpdate(postId, {
+        $pull: {
+          comments: req.params.id,
+        },
+      }).populate("user");
+
+      if(req.xhr){
+        return res.status(200).json({
+          data: {
+            comment_id: req.params.id
+          },
+          message: "Comment Deleted!"
+        });
+      }
 
       req.flash("success", "Comment Deleted!");
       return res.redirect("back");

@@ -22,7 +22,7 @@
   };
 
   let createComment = function (commentForm) {
-    commentForm.submit(function (event) {
+    commentForm.submit(function (event) {               // commentForm is accessible in this handler function because of CLOSURES
       event.preventDefault();
 
       $.ajax({
@@ -33,6 +33,8 @@
           let newComment = newCommentDOM(data.data.comment);
 
           $(`#post-comments-${data.data.comment.post}`).prepend(newComment);
+
+          deleteComment($(' .delete-comment-button', newComment));          // attaching click event to delete link of new comment
 
           showNotifications.success(data.message);
 
@@ -58,6 +60,31 @@
                     </p>
                 </li>`);
   };
+
+  let deleteComment=function(deleteLink){
+    deleteLink.click(function(event){
+        event.preventDefault();
+
+        $.ajax({
+            method: 'get',
+            url: deleteLink.attr('href'),
+            success: function(data){
+                $(`#comment-${data.data.comment_id}`).remove();
+
+                showNotifications.success(data.message);
+            },
+            error: function(error){
+                console.log(error.responseText);
+            }
+        });
+    });
+  };
+
+  // attaching click event to every delete comment link
+  let deleteCommentButtons=$('.delete-comment-button');
+  for(let i=0; i<deleteCommentButtons.length; i++){
+    deleteComment(deleteCommentButtons.eq(i));
+  }
 
   // attaching submit event to every new comment form
   let newCommentForms = $(".new-comment-form");
