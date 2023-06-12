@@ -1,4 +1,6 @@
 {
+  // 
+
   // method to submit the form data for new post using AJAX
   let createPost = function () {
     let newPostForm = $("#new-post-form");
@@ -14,6 +16,8 @@
           let newPost = newPostDom(data.data.post);
 
           $("#posts-list-container > ul").prepend(newPost);
+
+          deletePost($(' .delete-post-button', newPost));
         },
         error: function (error) {
           console.log(error.responseText);
@@ -24,10 +28,10 @@
 
   // method to create a post in DOM
   let newPostDom = function (post) {
-    return $(`<li id="post-${post.id}">
+    return $(`<li id="post-${post._id}">
                 <p>
                     <small>
-                        <a href="/posts/destroy/${post._id}">X</a>
+                        <a class="delete-post-button" href="/posts/destroy/${post._id}">X</a>
                     </small>
                     ${post.content}
                     <br />
@@ -49,6 +53,32 @@
                 </div>
             </li>`);
   };
+
+
+  // method to delete a post from DOM
+  let deletePost=function(deleteLink){
+    deleteLink.click(function(event){
+      event.preventDefault();
+
+      $.ajax({
+        method: 'get',
+        url: deleteLink.attr('href'),
+        success: function(data){
+          $(`#post-${data.data.post_id}`).remove();
+        },
+        error: function(error){
+          console.log(error.responseText);
+        }
+      });
+    });
+  };
+
+  // attaching click event on every delete post link
+  // let deletePostButtons=$('.delete-post-button');
+  // for(let i=0; i<deletePostButtons.length; i++){
+  //   deletePost(deletePostButtons[i]);
+  // }
+
 
   createPost();
 }
