@@ -8,22 +8,29 @@ module.exports.create = async function (req, res) {
       user: req.user._id,
     });
 
+    // await post.populate({
+    //   path: "user",
+    //   select: "name"
+    // });
+
+    await post.populate("user", "name");
+
     // check if the request is AJAX
-    if(req.xhr){
+    if (req.xhr) {
       return res.status(200).json({
         data: {
-          post
+          post,
         },
-        message: 'Post Created!'
+        message: "Post Published!",
       });
     }
 
-    req.flash('success', "Post Published!");
+    req.flash("success", "Post Published!");
     return res.redirect("back");
-  } catch (err) {
     
-    req.flash('error', err);
-    return res.redirect('back');
+  } catch (err) {
+    req.flash("error", err);
+    return res.redirect("back");
   }
 };
 
@@ -37,23 +44,24 @@ module.exports.destroy = async function (req, res) {
 
       await Comment.deleteMany({ post: req.params.id });
 
-      if(req.xhr){
+      if (req.xhr) {
         return res.status(200).json({
           data: {
-            post_id: req.params.id
+            post_id: req.params.id,
           },
-          message: "Post Deleted!"
+          message: "Post and associated comments deleted!",
         });
       }
 
-      req.flash('success', "Post and associated comments deleted!");
+      req.flash("success", "Post and associated comments deleted!");
       return res.redirect("back");
     }
 
-    req.flash('error', "You are not authorized to delete this post");
+    req.flash("error", "You are not authorized to delete this post");
     return res.redirect("back");
+
   } catch (err) {
-    req.flash('error', err);
+    req.flash("error", err);
     return res.redirect("back");
   }
 };

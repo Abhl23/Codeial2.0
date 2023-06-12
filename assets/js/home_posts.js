@@ -1,5 +1,25 @@
 {
-  // 
+  // display notifications using Noty
+  let showNotifications = {
+    success: function (message) {
+      new Noty({
+        type: "success",
+        text: message,
+        theme: "relax",
+        layout: "topRight",
+        timeout: 1500,
+      }).show();
+    },
+    error: function (message) {
+      new Noty({
+        type: "error",
+        text: message,
+        theme: "relax",
+        layout: "topRight",
+        timeout: 1500,
+      }).show();
+    },
+  };
 
   // method to submit the form data for new post using AJAX
   let createPost = function () {
@@ -17,7 +37,11 @@
 
           $("#posts-list-container > ul").prepend(newPost);
 
-          deletePost($(' .delete-post-button', newPost));
+          deletePost($(" .delete-post-button", newPost));
+
+          showNotifications.success(data.message);
+
+          $('#new-post-form textarea').val('');
         },
         error: function (error) {
           console.log(error.responseText);
@@ -54,31 +78,32 @@
             </li>`);
   };
 
-
   // method to delete a post from DOM
-  let deletePost=function(deleteLink){
-    deleteLink.click(function(event){
+  let deletePost = function (deleteLink) {
+    deleteLink.click(function (event) {
       event.preventDefault();
 
       $.ajax({
-        method: 'get',
-        url: deleteLink.attr('href'),
-        success: function(data){
+        method: "get",
+        url: deleteLink.attr("href"),
+        success: function (data) {
           $(`#post-${data.data.post_id}`).remove();
+
+          showNotifications.success(data.message);
         },
-        error: function(error){
+        error: function (error) {
           console.log(error.responseText);
-        }
+        },
       });
     });
   };
 
+
   // attaching click event on every delete post link
-  // let deletePostButtons=$('.delete-post-button');
-  // for(let i=0; i<deletePostButtons.length; i++){
-  //   deletePost(deletePostButtons[i]);
-  // }
-
-
+  let deletePostButtons=$('.delete-post-button');
+  for(let i=0; i<deletePostButtons.length; i++){
+    deletePost(deletePostButtons.eq(i));          // eq() used because we want to pass a JQuery object
+  }
+    
   createPost();
 }
