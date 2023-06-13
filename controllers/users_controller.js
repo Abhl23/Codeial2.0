@@ -1,5 +1,8 @@
 const User = require("../models/user");
 
+const fs=require('fs');
+const path=require('path');
+
 module.exports.profile = async function (req, res) {
   try {
     const user = await User.findById(req.params.id);
@@ -31,6 +34,10 @@ module.exports.update = async function (req, res) {
         user.email = req.body.email;
 
         if (req.file) {
+          if(user.avatar && fs.existsSync(path.join(__dirname, '..', user.avatar))){    // checks if the avatar actually exists in both user and in directory
+            fs.unlinkSync(path.join(__dirname, '..', user.avatar));           // deletes the avatar if it exists from the directory
+          }
+
           // this is saving the path of the uploaded file in the user document of db
           user.avatar = User.avatarPath + "/" + req.file.filename;
         }
