@@ -2,3 +2,9 @@ body {
   background-color: lightblue; }
   body #profile-container {
     padding: 10px; }
+    body #profile-container form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; }
+      body #profile-container form input {
+        margin-bottom: 10px; }
