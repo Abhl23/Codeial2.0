@@ -22,7 +22,6 @@ module.exports.create = async function (req, res) {
           post,
         },
         message: "Post Published!",
-        success: true
       });
     }
 
@@ -56,7 +55,6 @@ module.exports.destroy = async function (req, res) {
             post_id: req.params.id,
           },
           message: "Post and associated comments deleted!",
-          success: true
         });
       }
 
