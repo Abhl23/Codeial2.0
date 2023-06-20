@@ -22,7 +22,7 @@
         success: function (data) {
           let newComment = newCommentDOM(data.data.comment);
 
-          $(`#post-comments-${data.data.comment.post}`).prepend(newComment);
+          $(`#post-comments-${data.data.comment.post}`).append(newComment);
 
           deleteComment($(" .delete-comment-button", newComment)); // attaching click event to delete link of new comment
 
