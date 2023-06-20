@@ -1,7 +1,10 @@
 const Comment = require("../models/comment");
 const Post = require("../models/post");
 
-const commentsMailer=require('../mailers/comments_mailer');
+// const commentsMailer=require('../mailers/comments_mailer');
+
+const queue = require("../config/kue");
+const commentEmailWorker = require("../workers/comment_email_worker");
 
 module.exports.create = async function (req, res) {
   try {
@@ -23,7 +26,15 @@ module.exports.create = async function (req, res) {
 
       await comment.populate("user", "name email");
 
-      commentsMailer.newComment(comment);
+      // commentsMailer.newComment(comment);
+      let job = queue.create("emails", comment).save(function (err) {
+        if (err) {
+          console.log("Error in adding a job to emails queue", err);
+          return;
+        }
+
+        console.log("Job enqueued!", job.id);
+      });
 
       if (req.xhr) {
         return res.status(200).json({
@@ -93,7 +104,6 @@ module.exports.destroy = async function (req, res) {
       req.flash("success", "Comment Deleted!");
       return res.redirect("back");
     } else {
-      
       return res.status(401).json({
         message: "You are not authorized to delete this comment!",
       });
