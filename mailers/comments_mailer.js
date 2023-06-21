@@ -17,7 +17,7 @@ module.exports.newComment = (comment) => {
     (err, info) => {
       // info carries the information about the request that has been sent to gmail SMTP mailing server
       if (err) {
-        console.log(`Error in sending mail: ${err}`);
+        console.log(`Error in sending new comment mail: ${err}`);
         return;
       }
 
