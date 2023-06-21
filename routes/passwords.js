@@ -7,4 +7,6 @@ router.get("/forgot-password", passwordsController.forgotPassword);
 
 router.post("/reset-link", passwordsController.resetLink);
 
+router.get("/reset-password", passwordsController.resetPassword);
+
 module.exports = router;

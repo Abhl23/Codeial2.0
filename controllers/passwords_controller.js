@@ -5,6 +5,7 @@ const crypto = require("crypto");
 
 const resetPasswordMailer = require("../mailers/reset_password_mailer");
 
+// render the forgot password page
 module.exports.forgotPassword = function (req, res) {
   if (req.isAuthenticated()) {
     return res.redirect("/");
@@ -15,6 +16,7 @@ module.exports.forgotPassword = function (req, res) {
   });
 };
 
+// create the reset password token
 module.exports.resetLink = async function (req, res) {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -40,5 +42,31 @@ module.exports.resetLink = async function (req, res) {
     console.log("Error in reset link action", err);
     req.flash("error", err);
     return res.redirect("back");
+  }
+};
+
+// render the reset password page
+module.exports.resetPassword = async function (req, res) {
+  try {
+    if (req.isAuthenticated()) {
+      return res.redirect("/");
+    }
+
+    const resetToken = await ResetToken.findOne({
+      accessToken: req.query.accessToken,
+    });
+
+    if (resetToken) {
+      return res.render("reset_password", {
+        title: "Codeial | Reset Password",
+        resetToken: resetToken,
+      });
+    } else {
+      req.flash("error", "Access Token is Invalid!");
+      return res.redirect("/");
+    }
+  } catch (err) {
+    console.log("Error in reset password action", err);
+    return res.redirect("/");
   }
 };
