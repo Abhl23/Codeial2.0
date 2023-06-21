@@ -9,4 +9,6 @@ router.post("/reset-link", passwordsController.resetLink);
 
 router.get("/reset-password", passwordsController.resetPassword);
 
+router.post("/update-password", passwordsController.updatePassword);
+
 module.exports = router;

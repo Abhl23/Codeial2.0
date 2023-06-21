@@ -19,6 +19,10 @@ module.exports.forgotPassword = function (req, res) {
 // create the reset password token
 module.exports.resetLink = async function (req, res) {
   try {
+    if (req.isAuthenticated()) {
+      return res.redirect("/");
+    }
+
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
@@ -67,6 +71,40 @@ module.exports.resetPassword = async function (req, res) {
     }
   } catch (err) {
     console.log("Error in reset password action", err);
+    return res.redirect("/");
+  }
+};
+
+// update password
+module.exports.updatePassword = async function (req, res) {
+  try {
+    if (req.isAuthenticated()) {
+      return res.redirect("/");
+    }
+
+    if (req.body.password != req.body.confirm_password) {
+      req.flash("error", "Passwords does not match!");
+      return res.redirect("back");
+    }
+
+    const resetToken = await ResetToken.findByIdAndUpdate(
+      req.body.reset_token_id,
+      { isValid: false }
+    );
+
+    if (resetToken) {
+      await User.findByIdAndUpdate(resetToken.user, {
+        password: req.body.password,
+      });
+
+      req.flash("success", "Password Updated!");
+      return res.redirect("/users/sign-in");
+    } else {
+      req.flash("error", "Reset Token Invalid!");
+      return res.redirect("back");
+    }
+  } catch (err) {
+    console.log("Error in update password action", err);
     return res.redirect("/");
   }
 };
