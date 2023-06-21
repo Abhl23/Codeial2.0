@@ -39,4 +39,6 @@ router.get(
   usersController.createSession
 );
 
+router.use("/passwords", require("./passwords"));
+
 module.exports = router;
