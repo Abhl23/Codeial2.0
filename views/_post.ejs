@@ -7,6 +7,14 @@
     <% } %> <%= post.content %>
     <br />
     <strong><%= post.user.name %></strong>
+    &ensp;
+    <% if(locals.user) { %>
+      <a class="like-button" href="/likes/toggle/?id=<%= post._id %>&type=Post">
+        <span class="likes-count"><%= post.likes.length %></span> likes
+      </a>  
+    <% } else { %>
+      <%= post.likes.length %> likes  
+    <% } %>
   </p>
 
   <div class="post-comments-container">
@@ -22,9 +30,7 @@
       <ul id="post-comments-<%= post._id %>">
         <% for(let comment of post.comments) { %>
         
-            <%- include('_comment', {
-                comment
-            }); -%>
+            <%- include('_comment', { comment: comment }); -%>
 
         <% } %>
       </ul>

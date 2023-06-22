@@ -26,12 +26,14 @@
 
           deleteComment($(" .delete-comment-button", newComment)); // attaching click event to delete link of new comment
 
+          homeLikes.toggleLikeFunctionality($(" .like-button", newComment));  // attaching click event to like button of new comment
+
           showNotification("success", data.message);
 
           $(' input[type="text"]', commentForm).val("");
         },
         error: function (error) {
-          showNotification('error', error.responseJSON.message);
+          showNotification("error", error.responseJSON.message);
           console.log(error.responseText);
         },
       });
@@ -48,6 +50,10 @@
                         ${comment.content}
                         <br />
                         <small>${comment.user.name}</small>
+                        &ensp;
+                        <a class="like-button" href="/likes/toggle/?id=${comment._id}&type=Comment">
+                          <span class="likes-count">${comment.likes.length}</span> likes
+                        </a>
                     </p>
                 </li>`);
   };
@@ -65,7 +71,7 @@
           showNotification("success", data.message);
         },
         error: function (error) {
-          showNotification('error', error.responseJSON.message);
+          showNotification("error", error.responseJSON.message);
           console.log(error.responseText);
         },
       });

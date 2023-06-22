@@ -21,9 +21,9 @@
       <ul>
         <% for(let post of posts) { %>
 
-           <%- include('_post', { post }); -%> 
+           <%- include('_post', { post: post }); -%> 
            
-        <%} %>
+        <% } %>
       </ul>
     </div>
   </section>
@@ -41,3 +41,4 @@
 
 <script type="text/javascript" src="/js/home_posts.js"></script>
 <script type="text/javascript" src="/js/home_comments.js"></script>
+<script type="text/javascript" src="/js/home_likes.js"></script>

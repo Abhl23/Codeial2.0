@@ -26,7 +26,9 @@
 
           $("#posts-list-container > ul").prepend(newPost);
 
-          deletePost($(" .delete-post-button", newPost));
+          deletePost($(" .delete-post-button", newPost));   // attaching click event to delete link of new post
+
+          homeLikes.toggleLikeFunctionality($(" .like-button", newPost)); // attaching click event to like button of new post
 
           showNotification('success', data.message);
 
@@ -50,6 +52,10 @@
                     ${post.content}
                     <br />
                     <strong>${post.user.name}</strong>
+                    &ensp;
+                    <a class="like-button" href="/likes/toggle/?id=${post._id}&type=Post">
+                      <span class="likes-count">${post.likes.length}</span> likes
+                    </a>  
                 </p>
             
                 <div class="post-comments-container">
