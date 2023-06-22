@@ -2,14 +2,12 @@
 
 <div id="profile-container">
   <% if(profile_user.avatar) { %>
-    <img
-      src="<%= profile_user.avatar %>"
-      alt="<%= profile_user.name %>"
-      style="margin-bottom: 10px; width: 100px"
-    />
-  <% } %> 
-  
-  <% if(profile_user.id == user.id) { %>
+  <img
+    src="<%= profile_user.avatar %>"
+    alt="<%= profile_user.name %>"
+    style="margin-bottom: 10px; width: 100px"
+  />
+  <% } %> <% if(profile_user.id == user.id) { %>
 
   <!-- if user matches then show the update profile form -->
   <form
@@ -44,6 +42,18 @@
   <!-- else only show the profile info -->
   <p>Name: <%= profile_user.name %></p>
   <p>Email: <%= profile_user.email %></p>
+
+  <button
+    id="toggle-friendship"
+    data-url="/friendships/toggle/<%= profile_user._id %>"
+    type="button"
+  >
+    <% if(areFriends) { %>
+      Remove Friend  
+    <% } else { %>
+      Add Friend  
+    <% } %>
+  </button>
 
   <% } %>
 </div>
