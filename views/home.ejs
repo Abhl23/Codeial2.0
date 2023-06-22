@@ -1,42 +1,56 @@
-<link rel="stylesheet" type="text/css" href="/css/home.css">
+<link rel="stylesheet" type="text/css" href="/css/home.css" />
 
 <div id="home-container">
-  <section id="feed-posts">
-    <h2>Posts</h2>
-  
-    <% if(locals.user) { %>
-    <form action="/posts/create" method="post" id="new-post-form">
-      <textarea
-        name="content"
-        cols="30"
-        rows="3"
-        placeholder="Type Here..."
-        required
-      ></textarea>
-      <button type="submit">Post</button>
-    </form>
-    <% } %>
-  
-    <div id="posts-list-container">
-      <ul>
-        <% for(let post of posts) { %>
+  <div id="left-column">
+    <section id="feed-posts">
+      <h2>Posts</h2>
 
-           <%- include('_post', { post: post }); -%> 
-           
-        <% } %>
-      </ul>
-    </div>
-  </section>
-  
-  <!-- Cannot use 'user' as a variable name because locals.user already exists -->
-  <section id="user-friends">
-    <h2>Friends</h2>
-    <% for(let one_user of all_users) { %>
-    <p>
-      <a href="/users/profile/<%= one_user.id %>"><%= one_user.name %></a>
-    </p>
-    <% } %>
-  </section>
+      <% if(locals.user) { %>
+      <form action="/posts/create" method="post" id="new-post-form">
+        <textarea
+          name="content"
+          cols="30"
+          rows="3"
+          placeholder="Type Here..."
+          required
+        ></textarea>
+        <button type="submit">Post</button>
+      </form>
+      <% } %>
+
+      <div id="posts-list-container">
+        <ul>
+          <% for(let post of posts) { %> <%- include('_post', { post: post });
+          -%> <% } %>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div id="right-column">
+    <section id="user-friends">
+      <h2>Friends</h2>
+
+      <% if(locals.user) { %>
+        
+      <% } else { %>
+        <p>Sign In to view this info!</p>  
+      <% } %>
+
+    </section>
+
+    <hr>
+    
+    <!-- Cannot use 'user' as a variable name because locals.user already exists -->
+    <section id="all-users">
+      <h2>Users</h2>
+      <% for(let one_user of all_users) { %>
+      <p>
+        <a href="/users/profile/<%= one_user.id %>"><%= one_user.name %></a>
+      </p>
+      <% } %>
+    </section>
+  </div>
 </div>
 
 <script type="text/javascript" src="/js/home_posts.js"></script>
