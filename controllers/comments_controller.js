@@ -1,5 +1,6 @@
 const Comment = require("../models/comment");
 const Post = require("../models/post");
+const Like = require("../models/like");
 
 // const commentsMailer=require('../mailers/comments_mailer');
 
@@ -91,6 +92,11 @@ module.exports.destroy = async function (req, res) {
           comments: req.params.id,
         },
       }).populate("user");
+
+      await Like.deleteMany({
+        likeable: req.params.id,
+        onModel: "Comment",
+      });
 
       if (req.xhr) {
         return res.status(200).json({
