@@ -11,7 +11,7 @@ module.exports.home = async function (req, res) {
         path: "comments",
         populate: {
           path: "user",
-          select: "name"
+          select: "name",
         },
         // options: {
         //   sort: "-createdAt",
@@ -20,13 +20,26 @@ module.exports.home = async function (req, res) {
 
     const users = await User.find({});
 
+    let signedInUser;
+
+    if (req.user) {
+      signedInUser = await User.findById(req.user._id).populate(
+        "friendships",
+        "name"
+      );
+
+      console.log("********", signedInUser.friendships);
+    }
+
     // Cannot use 'user' as a variable name because locals.user already exists
     return res.render("home", {
       title: "Codeial | Home",
       posts,
       all_users: users,
+      signedInUser: signedInUser,
     });
   } catch (err) {
+    console.log("**********", err);
     req.flash("error", err);
     return res.redirect("back");
   }
