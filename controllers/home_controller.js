@@ -27,8 +27,6 @@ module.exports.home = async function (req, res) {
         "friendships",
         "name"
       );
-
-      console.log("********", signedInUser.friendships);
     }
 
     // Cannot use 'user' as a variable name because locals.user already exists

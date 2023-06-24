@@ -38,26 +38,28 @@
     
     <%- script %>
 
-    <script>
-      <% if(flash.success && flash.success.length > 0) { %>
+    <% if(flash.success && flash.success.length > 0) { %>
+        <script>
           new Noty({
-              type: "success",
-              text: "<%= flash.success %>",
-              theme: "relax",
-              layout: "topRight",
-              timeout: 1500
+            type: "success",
+            text: "<%= flash.success %>",
+            theme: "relax",
+            layout: "topRight",
+            timeout: 1500
           }).show();
-      <% } %>
+        </script>
+    <% } %>
 
-      <% if(flash.error && flash.error.length > 0) { %>
+    <% if(flash.error && flash.error.length > 0) { %>
+        <script>
           new Noty({
-              type: "error",
-              text: "<%= flash.error %>",
-              theme: "relax",
-              layout: "topRight",
-              timeout: 1500
+            type: "error",
+            text: "<%= flash.error %>",
+            theme: "relax",
+            layout: "topRight",
+            timeout: 1500
           }).show();
-      <% } %>
-    </script>
+        </script>
+    <% } %>
   </body>
 </html>

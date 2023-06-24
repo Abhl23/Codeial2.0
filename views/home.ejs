@@ -70,5 +70,11 @@
 <!-- this file will act as a subscriber for chat sockets on the client side -->
 <script type="text/javascript" src="/js/chat_engine.js"></script>
 
+<% if(locals.user) { %>
+  <script>
+    new ChatEngine("chatbox", "<%= locals.user.email %>");
+  </script>  
+<% } %>
+
 
 
