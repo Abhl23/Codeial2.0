@@ -22,6 +22,8 @@
     .other-message {
       align-self: flex-start;
       padding: 5px;
+      display: flex;
+      flex-direction: column;
 
       span {
         max-width: calc(100% - 30px);
@@ -36,6 +38,9 @@
     .self-message {
       align-self: flex-end;
       padding: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
 
       span {
         max-width: calc(100% - 30px);

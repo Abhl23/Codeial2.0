@@ -12,6 +12,7 @@ module.exports.chatSockets = function (socketServer) {
       console.log("Socket disconnected!");
     });
 
+    // detecting a join_room event emitted by the client
     socket.on("join_room", function(data){
       console.log("Joining request received", data);
 
@@ -20,6 +21,11 @@ module.exports.chatSockets = function (socketServer) {
 
       // emitting an event called user_joined to all the users in this particular chatroom
       io.in(data.chatroom).emit("user_joined", data);
+    });
+
+    // detect send_message and broadcast the message to everyone in the chatroom
+    socket.on("send_message", function(data){
+      io.in(data.chatroom).emit("receive_message", data);
     });
   });
 };

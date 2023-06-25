@@ -19,7 +19,9 @@
     box-sizing: border-box; }
     #chatbox #messages-list .other-message {
       align-self: flex-start;
-      padding: 5px; }
+      padding: 5px;
+      display: flex;
+      flex-direction: column; }
       #chatbox #messages-list .other-message span {
         max-width: calc(100% - 30px);
         display: inline-block;
@@ -29,7 +31,10 @@
         border-radius: 10px 10px 10px 0px; }
     #chatbox #messages-list .self-message {
       align-self: flex-end;
-      padding: 5px; }
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; }
       #chatbox #messages-list .self-message span {
         max-width: calc(100% - 30px);
         display: inline-block;
