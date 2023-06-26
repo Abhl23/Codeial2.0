@@ -5,14 +5,15 @@ const crypto = require("crypto");
 
 const User = require("../models/user");
 
+const env = require("./environment");
+
 // tell passport to use new strategy for google login
 passport.use(
   new googleStrategy(
     {
-      clientID:
-        "472497485199-pn5tuecdo07qi24t9oqq3shrcpe2lvpe.apps.googleusercontent.com",
-      clientSecret: "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",
-      callbackURL: "http://localhost:8000/users/auth/google/callback",
+      clientID: env.google_client_id,
+      clientSecret: env.google_client_secret,
+      callbackURL: env.google_callback_url,
     },
     async function (accessToken, refreshToken, profile, done) {
       try {
@@ -30,7 +31,7 @@ passport.use(
             email: profile.emails[0].value,
             name: profile.displayName,
             password: crypto.randomBytes(20).toString("hex"),
-            avatar: profile.photos[0].value
+            avatar: profile.photos[0].value,
           });
 
           return done(null, user);
