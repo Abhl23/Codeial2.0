@@ -24,6 +24,7 @@ const customMware = require("./config/middleware");
 const port = 8000;
 
 const app = express();
+require("./config/view-helpers")(app);
 
 // setup the chat server to be used with socket.io
 const chatServer = require("http").Server(app);

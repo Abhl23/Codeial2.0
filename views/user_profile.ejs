@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/css/user_profile.css" />
+<link rel="stylesheet" type="text/css" href=<%= "/css/" + assetPath("user_profile.css") %> />
 
 <div id="profile-container">
   <% if(profile_user.avatar) { %>
@@ -58,4 +58,4 @@
   <% } %>
 </div>
 
-<script type="text/javascript" src="/js/user_profile.js"></script>
+<script type="text/javascript" src='<%= "/js/" + assetPath("user_profile.js") %>'></script>
